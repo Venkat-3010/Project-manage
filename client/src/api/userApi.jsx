@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const url = "http://localhost:4000";
+const url = "http://localhost:4000/api/user";
 
 const registerUser = async({name, email, password}) => {
     try {

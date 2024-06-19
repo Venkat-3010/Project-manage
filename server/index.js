@@ -11,7 +11,7 @@ db();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 app.get("/healthCheck", (req, res) => {
     console.log(" at the healthcheck api endpoint");

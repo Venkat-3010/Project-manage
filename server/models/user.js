@@ -20,3 +20,4 @@ const userSchema = new Schema(
 );
 
 const User = mongoose.model('auth', userSchema);
+module.exports = User;
