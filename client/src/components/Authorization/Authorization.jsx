@@ -1,11 +1,25 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, registerUser } from "../../api/userApi";
 import styles from "./Authorization.module.css";
 import email from "../../assets/email_icon.png";
 import lock from "../../assets/lock_icon.png";
 import profile from "../../assets/profile_icon.png";
+import eye from "../../assets/eye_icon.png";
+import bg from "../../assets/bg_image.png";
+
+const SideBg = () => {
+  return (
+    <div className={styles.bg_container}>
+      <img src={bg} alt="bg" className={styles.side_img}/>
+      <div className={styles.bg_text}>
+        <p>Welcome aboard my friend </p>
+        <span>just a couple of clicks and we start</span>
+      </div>
+    </div>
+  );
+};
 
 const Login = () => {
   const navigate = useNavigate();
@@ -43,49 +57,54 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login_container}>
-      <section className={styles.login_section}>
-        <h3 className={styles.login_title}>Login</h3>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.email_input}>
-            <div className={styles.input_box}>
-              <label htmlFor="email" className={styles.email_label}>
-                <img src={email} alt="email" />
-              </label>
-              <input
-                type="text"
-                placeholder="Email"
-                name="email"
-                onChange={handleData}
-              />
+    <div className={styles.main_container}>
+      <SideBg />
+      <div className={styles.login_container}>
+        <section className={styles.login_section}>
+          <h3 className={styles.login_title}>Login</h3>
+          <form onSubmit={handleSubmit} className={styles.login_form}>
+            <div className={`${styles.email_input} ${styles.input_shell}`}>
+              <div className={styles.input_box}>
+                <label htmlFor="email" className={styles.email_label}>
+                  <img src={email} alt="email" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  name="email"
+                  id="email"
+                  onChange={handleData}
+                />
+              </div>
             </div>
-          </div>
-          <div className={styles.password_input}>
-            <div className={styles.input_box}>
-              <label htmlFor="password" className={styles.email_label}>
-                <img src={lock} alt="lock" />
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                onChange={handleData}
-              />
+            <div className={`${styles.password_input} ${styles.input_shell}`}>
+              <div className={styles.input_box}>
+                <label htmlFor="password" className={styles.email_label}>
+                  <img src={lock} alt="lock" />
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  id="password"
+                  onChange={handleData}
+                />
+                <img src={eye} className={styles.eye_icon} alt="eye" />
+              </div>
             </div>
-          </div>
-          <button className="authBtn" type="submit">
-            Log in
-          </button>
-        </form>
-        <p>Have no Account yet?</p>
-        <a
-          href="/register"
-          type="submit"
-          className={`${styles.authBtn} ${styles.btn_outline}`}
-        >
-          Register
-        </a>
-      </section>
+            <button className={styles.authBtn} type="submit">
+              Log in
+            </button>
+          </form>
+          <p>Have no Account yet?</p>
+          <Link
+            to="/register"
+            className={`${styles.authBtn} ${styles.btn_outline}`}
+          >
+            Register
+          </Link>
+        </section>
+      </div>
     </div>
   );
 };
@@ -138,7 +157,7 @@ const Register = () => {
 
     const result = await registerUser(data);
     if (result) {
-      toast.success("Logged in successfully", {
+      toast.success("Registered successfully", {
         position: "bottom-right",
         theme: "dark",
       });
@@ -148,77 +167,90 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.login_container}>
-      <section className={styles.login_section}>
-        <h3 className={styles.login_title}>Register</h3>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.name_input}>
-            <div className={styles.input_box}>
-              <label htmlFor="name" className={styles.name_label}>
-                <img src={profile} alt="profile_icon" />
-              </label>
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                onChange={handleData}
-              />
+    <div className={styles.main_container}>
+      <SideBg />
+      <div className={styles.register_container}>
+        <section className={styles.register_section}>
+          <h3 className={styles.register_title}>Register</h3>
+          <form className={styles.register_form} onSubmit={handleSubmit}>
+            <div className={`${styles.name_input} ${styles.input_shell}`}>
+              <div className={styles.input_box}>
+                <label htmlFor="name" className={styles.name_label}>
+                  <img src={profile} alt="profile_icon" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  id="name"
+                  onChange={handleData}
+                />
+              </div>
             </div>
-          </div>
-          <div className={styles.email_input}>
-            <div className={styles.input_box}>
-              <label htmlFor="email" className={styles.email_label}>
-                <img src={email} alt="email" />
-              </label>
-              <input
-                type="text"
-                placeholder="Email"
-                name="email"
-                onChange={handleData}
-              />
+            <div className={`${styles.email_input} ${styles.input_shell}`}>
+              <div className={styles.input_box}>
+                <label htmlFor="email" className={styles.email_label}>
+                  <img src={email} alt="email" />
+                </label>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  name="email"
+                  id="email"
+                  onChange={handleData}
+                />
+              </div>
             </div>
-          </div>
-          <div className={styles.confirmPassword_input}>
-            <div className={styles.input_box}>
-              <label htmlFor="confirmPassword" className={styles.confirmPassword_label}>
-                <img src={lock} alt="lock" />
-              </label>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-                onChange={handleConfirmPassword}
-              />
+            <div className={`${styles.password_input} ${styles.input_shell}`}>
+              <div className={styles.input_box}>
+                <label htmlFor="password" className={styles.email_label}>
+                  <img src={lock} alt="lock" />
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  id="password"
+                  onChange={handleData}
+                />
+                <img src={eye} className={styles.eye_icon} alt="eye" />
+              </div>
             </div>
-          </div>
-          <div className={styles.password_input}>
-            <div className={styles.input_box}>
-              <label htmlFor="password" className={styles.email_label}>
-                <img src={lock} alt="lock" />
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                onChange={handleData}
-              />
+            <div
+              className={`${styles.confirmPassword_input} ${styles.input_shell}`}
+            >
+              <div className={styles.input_box}>
+                <label
+                  htmlFor="confirmPassword"
+                  className={styles.confirmPassword_label}
+                >
+                  <img src={lock} alt="lock" />
+                </label>
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  onChange={handleConfirmPassword}
+                />
+                <img src={eye} className={styles.eye_icon} alt="eye" />
+              </div>
             </div>
-          </div>
-          <button className="authBtn" type="submit">
-            Register
-          </button>
-        </form>
-        <p>Have an Account?</p>
-        <a
-          href="/"
-          type="submit"
-          className={`${styles.authBtn} ${styles.btn_outline}`}
-        >
-          Log In
-        </a>
-      </section>
+            <button className={styles.authBtn} type="submit">
+              Register
+            </button>
+          </form>
+          <p>Have an Account?</p>
+          <Link
+            to="/"
+            className={`${styles.authBtn} ${styles.btn_outline}`}
+          >
+            Log In
+          </Link>
+        </section>
+      </div>
     </div>
   );
 };
 
-export {Login, Register};
+export { Login, Register };

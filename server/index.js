@@ -23,6 +23,7 @@ app.get("/healthCheck", (req, res) => {
 });
 
 app.use('/api/user', require('./routes/userRoute'));
+app.use('/api/tasks', require('./routes/tasksRoute'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
