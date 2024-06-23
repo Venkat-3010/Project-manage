@@ -36,6 +36,7 @@ const loginUser = async({email, password}) => {
             localStorage.setItem('email', response.data.email);
             localStorage.setItem('password', response.data.password);
             localStorage.setItem('id', response.data._id);
+            localStorage.setItem('name', response.data.name);
         }
         return response.data;
     } catch (error) {

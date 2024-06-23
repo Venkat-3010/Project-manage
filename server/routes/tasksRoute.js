@@ -9,13 +9,11 @@ const {
   updateTaskState,
 } = require("../controller/tasks");
 
-const auth  = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-router.route("/")
-    .post(auth, createTask)
-    .get(auth, getTasks);
+router.route("/").post(auth, createTask).get(auth, getTasks);
 
 router.route("/analytics").get(auth, getTaskAnalytics);
 

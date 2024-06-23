@@ -1,0 +1,62 @@
+.navBar_container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 1.5rem; */
+    border-right: 1px solid #EDF5FE;
+    min-width: 170px;
+}
+
+.logo, .logout, .item{
+    display: flex;
+    gap: 1rem;
+    align-items: center; 
+    font-size: 16px; 
+    color: #707070;
+    text-decoration: none;
+    padding: 0.5rem 1.5rem;
+}
+
+.logo_text{
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
+}
+
+.logout{
+    margin-bottom: 2.5rem;
+    color: #CF3636;
+    cursor: pointer;
+}
+
+.top{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-top: 1rem;
+    padding: 0;
+}
+
+.text{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.navBar_items{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+} 
+
+.selected{
+    background: #4391ED1A;
+    width: 100%;
+    color: #000000;
+}
+
+.img{
+    width: 20px;
+    height: 20px;
+}

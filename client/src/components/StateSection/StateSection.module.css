@@ -1,0 +1,47 @@
+.section_container{
+    height: calc(-10.5rem + 100vh);
+    margin-top: 1rem;
+}
+
+.tasks_container{
+    height: 100%;
+    display: flex;
+    overflow-x: scroll;
+    padding-right: 2rem;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.task_column{
+    border-radius: 15px;
+    background: #EEF2F5;
+    width: 400px;
+    height: 97%;
+    padding: 1.5rem;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+.block_top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.block_top_right{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.collapse_icon{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.plus_icon{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}

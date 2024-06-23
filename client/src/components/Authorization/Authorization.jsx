@@ -12,7 +12,7 @@ import bg from "../../assets/bg_image.png";
 const SideBg = () => {
   return (
     <div className={styles.bg_container}>
-      <img src={bg} alt="bg" className={styles.side_img}/>
+      <img src={bg} alt="bg" className={styles.side_img} />
       <div className={styles.bg_text}>
         <p>Welcome aboard my friend </p>
         <span>just a couple of clicks and we start</span>
@@ -28,6 +28,27 @@ const Login = () => {
     password: "",
   });
 
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [error, setError] = useState({});
+
+  const validateForm = () => {
+    let errors = {};
+
+    if (!data.email) {
+      errors.email = "Email is required";
+    } else if (!data.email.includes("@")) {
+      errors.email = "Please enter a valid email";
+    }
+
+    if (!data.password) {
+      errors.password = "Password is required";
+    } else if (data.password.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+
+    return errors;
+  };
+
   const handleData = (event) => {
     setData({
       ...data,
@@ -35,9 +56,15 @@ const Login = () => {
     });
   };
 
+  const handlePasswordVisibility = () => {
+    setPasswordVisibility(!passwordVisibility);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!data.email || !data.password) {
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setError(errors);
       toast.warn("Please fill in all required fields", {
         position: "bottom-right",
         theme: "dark",
@@ -64,7 +91,10 @@ const Login = () => {
           <h3 className={styles.login_title}>Login</h3>
           <form onSubmit={handleSubmit} className={styles.login_form}>
             <div className={`${styles.email_input} ${styles.input_shell}`}>
-              <div className={styles.input_box}>
+              <div
+                className={styles.input_box}
+                style={{ border: error?.email && "1.5px solid #D60000" }}
+              >
                 <label htmlFor="email" className={styles.email_label}>
                   <img src={email} alt="email" />
                 </label>
@@ -76,21 +106,37 @@ const Login = () => {
                   onChange={handleData}
                 />
               </div>
+              {error.email && (
+                <small className={styles.errorMessage}>{error.email}</small>
+              )}
             </div>
             <div className={`${styles.password_input} ${styles.input_shell}`}>
-              <div className={styles.input_box}>
+              <div
+                className={styles.input_box}
+                style={{ border: error?.password && "1.5px solid #D60000" }}
+              >
                 <label htmlFor="password" className={styles.email_label}>
                   <img src={lock} alt="lock" />
                 </label>
                 <input
-                  type="password"
+                  type={passwordVisibility ? "text" : "password"}
                   placeholder="Password"
                   name="password"
                   id="password"
                   onChange={handleData}
                 />
-                <img src={eye} className={styles.eye_icon} alt="eye" />
+                <img
+                  src={eye}
+                  className={`${styles.eye_icon} ${
+                    passwordVisibility ? styles.eye_icon_selected : ""
+                  }`}
+                  alt="eye"
+                  onClick={handlePasswordVisibility}
+                />
               </div>
+              {error.password && (
+                <small className={styles.errorMessage}>{error.password}</small>
+              )}
             </div>
             <button className={styles.authBtn} type="submit">
               Log in
@@ -118,6 +164,36 @@ const Register = () => {
     password: "",
   });
 
+  const [error, setError] = useState({});
+
+  const validateForm = () => {
+    let errors = {};
+
+    if (!data.name) {
+      errors.name = "Name is required";
+    } else if (data.name.length < 3) {
+      errors.name = "Name must be at least 3 characters long";
+    }
+
+    if (!data.email) {
+      errors.email = "Email is required";
+    } else if (!data.email.includes("@")) {
+      errors.email = "Please enter a valid email";
+    }
+
+    if (!data.password) {
+      errors.password = "Password is required";
+    } else if (data.password.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+
+    if (data.password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    return errors;
+  };
+
   const handleData = (event) => {
     setData({
       ...data,
@@ -125,13 +201,27 @@ const Register = () => {
     });
   };
 
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [confirmPasswordVisibility, setConfirmPasswordVisibility] =
+    useState(false);
+
   const handleConfirmPassword = (event) => {
     setConfirmPassword(event.target.value);
   };
 
+  const handlePasswordVisibility = () => {
+    setPasswordVisibility(!passwordVisibility);
+  };
+
+  const handleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisibility(!confirmPasswordVisibility);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!data.email || !data.password || !data.name || !confirmPassword) {
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setError(errors);
       toast.warn("Please fill in all required fields", {
         position: "bottom-right",
         theme: "dark",
@@ -174,7 +264,7 @@ const Register = () => {
           <h3 className={styles.register_title}>Register</h3>
           <form className={styles.register_form} onSubmit={handleSubmit}>
             <div className={`${styles.name_input} ${styles.input_shell}`}>
-              <div className={styles.input_box}>
+              <div className={styles.input_box} style={{ border: error?.name && "1.5px solid #D60000" }}>
                 <label htmlFor="name" className={styles.name_label}>
                   <img src={profile} alt="profile_icon" />
                 </label>
@@ -186,9 +276,12 @@ const Register = () => {
                   onChange={handleData}
                 />
               </div>
+              {error.name && (
+                <small className={styles.errorMessage}>{error.name}</small>
+              )}
             </div>
             <div className={`${styles.email_input} ${styles.input_shell}`}>
-              <div className={styles.input_box}>
+              <div className={styles.input_box} style={{ border: error?.email && "1.5px solid #D60000" }}>
                 <label htmlFor="email" className={styles.email_label}>
                   <img src={email} alt="email" />
                 </label>
@@ -200,26 +293,39 @@ const Register = () => {
                   onChange={handleData}
                 />
               </div>
+              {error.email && (
+                <small className={styles.errorMessage}>{error.email}</small>
+              )}
             </div>
             <div className={`${styles.password_input} ${styles.input_shell}`}>
-              <div className={styles.input_box}>
+              <div className={styles.input_box} style={{ border: error?.password && "1.5px solid #D60000" }}>
                 <label htmlFor="password" className={styles.email_label}>
                   <img src={lock} alt="lock" />
                 </label>
                 <input
-                  type="password"
+                  type={passwordVisibility ? "text" : "password"}
                   placeholder="Password"
                   name="password"
                   id="password"
                   onChange={handleData}
                 />
-                <img src={eye} className={styles.eye_icon} alt="eye" />
+                <img
+                  src={eye}
+                  className={`${styles.eye_icon} ${
+                    passwordVisibility ? styles.eye_icon_selected : ""
+                  }`}
+                  alt="eye"
+                  onClick={handlePasswordVisibility}
+                />
               </div>
+              {error.password && (
+                <small className={styles.errorMessage}>{error.password}</small>
+              )}
             </div>
             <div
               className={`${styles.confirmPassword_input} ${styles.input_shell}`}
             >
-              <div className={styles.input_box}>
+              <div className={styles.input_box} style={{ border: error?.confirmPassword && "1.5px solid #D60000" }}>
                 <label
                   htmlFor="confirmPassword"
                   className={styles.confirmPassword_label}
@@ -227,24 +333,31 @@ const Register = () => {
                   <img src={lock} alt="lock" />
                 </label>
                 <input
-                  type="password"
+                  type={confirmPasswordVisibility ? "text" : "password"}
                   placeholder="Confirm Password"
                   name="confirmPassword"
                   id="confirmPassword"
                   onChange={handleConfirmPassword}
                 />
-                <img src={eye} className={styles.eye_icon} alt="eye" />
+                <img
+                  src={eye}
+                  className={`${styles.eye_icon} ${
+                    confirmPasswordVisibility ? styles.eye_icon_selected : ""
+                  }`}
+                  alt="eye"
+                  onClick={handleConfirmPasswordVisibility}
+                />
               </div>
+              {error.confirmPassword && (
+                <small className={styles.errorMessage}>{error.confirmPassword}</small>
+              )}
             </div>
             <button className={styles.authBtn} type="submit">
               Register
             </button>
           </form>
           <p>Have an Account?</p>
-          <Link
-            to="/"
-            className={`${styles.authBtn} ${styles.btn_outline}`}
-          >
+          <Link to="/" className={`${styles.authBtn} ${styles.btn_outline}`}>
             Log In
           </Link>
         </section>
