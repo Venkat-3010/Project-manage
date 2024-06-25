@@ -4,7 +4,7 @@ const url = "http://localhost:5000/api/tasks";
 
 const createTask = async (taskData) => {
   try {
-    const response = await axios.post("/", taskData, {
+    const response = await axios.post(`${url}/`, taskData, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -18,25 +18,31 @@ const createTask = async (taskData) => {
 
 const getTasks = async (filter) => {
   try {
-    const response = await axios.get(
-      "/",
-      { params: { filter } },
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
+    // console.log(filter, localStorage.getItem("token"));
+    const response = await axios.get(`${url}/`, {
+      params: { filter },
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
     return response.data;
   } catch (error) {
-    console.log(error);
-    toast.warn("Error getting tasks", error.message);
+    if (error.response && error.response.data.isTokenExpired) {
+      toast.warn("Session expired. Please log in again.", {
+        position: "bottom-right",
+        theme: "dark",
+      });
+      localStorage.removeItem("token");
+    } else {
+      console.log(error);
+      toast.warn("Error getting tasks", error.message);
+    }
   }
 };
 
 const updateTask = async (id, taskData) => {
   try {
-    const response = await axios.put(`/${id}`, taskData, {
+    const response = await axios.put(`${url}/${id}`, taskData, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -50,7 +56,7 @@ const updateTask = async (id, taskData) => {
 
 const deleteTask = async (id) => {
   try {
-    const response = await axios.delete(`/${id}`, {
+    const response = await axios.delete(`${url}/${id}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -64,7 +70,7 @@ const deleteTask = async (id) => {
 
 const getTaskById = async (id) => {
   try {
-    const response = await axios.get(`/${id}`, {
+    const response = await axios.get(`${url}/${id}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -79,7 +85,7 @@ const getTaskById = async (id) => {
 const updateTaskState = async (id, state) => {
   try {
     const response = await axios.put(
-      `/${id}/state`,
+      `${url}/${id}/state`,
       { state },
       {
         headers: {
@@ -96,7 +102,7 @@ const updateTaskState = async (id, state) => {
 
 const getTaskAnalytics = async () => {
   try {
-    const response = await axios.get("/analytics", {
+    const response = await axios.get(`${url}/analytics`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
