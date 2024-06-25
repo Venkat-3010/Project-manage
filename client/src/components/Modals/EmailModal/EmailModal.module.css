@@ -1,0 +1,81 @@
+.modal_container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: #303d438c;
+  z-index: 1000;
+}
+
+.modal_content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 250px;
+  width: 100%;
+  max-width: 700px;
+  min-height: 200px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 0.7rem 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal_text {
+  font-family: "Noto Sans";
+  color: #000000;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #767575;
+  outline: none;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.btn_grp {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.confimrModal_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    font-weight: 600;
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 250px;
+    width: 100%;
+    max-width: 700px;
+    min-height: 200px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 0.7rem 1.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  

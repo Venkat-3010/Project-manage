@@ -6,6 +6,7 @@ import BoardPage from "./pages/BoardPage/BoardPage";
 import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AppProvider from "./context/AppProvider";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -14,9 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/board" element={<BoardPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/board" element={<ProtectedRoute Component={BoardPage} />} />
+          <Route path="/analytics" element={<ProtectedRoute Component={AnalyticsPage} /> } />
+          <Route path="/settings" element={<ProtectedRoute Component={SettingsPage} />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

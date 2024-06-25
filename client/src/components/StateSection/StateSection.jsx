@@ -1,8 +1,13 @@
 import styles from "./StateSection.module.css";
 import collapse from "../../assets/collapse.png";
 import plus from "../../assets/plus.png";
+import CreateTaskModal from "../Modals/CreateTaskModal/CreateTaskModal";
 
-const StateSection = () => {
+const StateSection = ({
+  tasks,
+  showAddTaskModal,
+  setShowAddTaskModal
+}) => {
   return (
     <div className={styles.section_container}>
       <div className={styles.tasks_container}>
@@ -20,7 +25,12 @@ const StateSection = () => {
           <span className={styles.block_top}>
             <h3>To do</h3>
             <span className={styles.block_top_right}>
-              <img src={plus} alt="plus_icon" className={styles.plus_icon} />
+              <img
+                src={plus}
+                alt="plus_icon"
+                className={styles.plus_icon}
+                onClick={() => setShowAddTaskModal(true)}
+              />
               <img
                 src={collapse}
                 alt="collapse_icon"
@@ -50,6 +60,11 @@ const StateSection = () => {
           </span>
         </div>
       </div>
+      {showAddTaskModal && (
+        <CreateTaskModal
+          onClose={() => setShowAddTaskModal(false)}
+        />
+      )}
     </div>
   );
 };

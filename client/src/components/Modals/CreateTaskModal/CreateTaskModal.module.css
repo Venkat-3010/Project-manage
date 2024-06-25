@@ -1,0 +1,271 @@
+.modal_container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: #303d438c;
+  z-index: 1000;
+}
+
+.modal_content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 650px;
+  height: 550px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-family: Inter;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.title_content {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.title_input {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 3px;
+  border: 1px solid #4d40551a;
+  color: #9b959f;
+  outline: none;
+  font-weight: 100;
+  margin-bottom: 1rem;
+  box-shadow: 0px 1px 2px 0px #4d40551a;
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 0.7rem;
+}
+
+.priority_title,
+.priority_option {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.priority_option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "poppins";
+  color: #767575;
+  border: 1px solid #e2e2e2;
+  cursor: pointer;
+  padding: 0.5rem 0.7rem;
+  border-radius: 12px;
+}
+
+.priority_options {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 1rem;
+}
+
+.selected {
+  background: #eeecec;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+}
+
+.assign_to {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dropdown {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.select_container {
+  position: relative;
+  width: 85%;
+}
+
+.down_arrow {
+  width: 12px;
+  height: 8px;
+}
+
+.dropdown_content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.person_option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.person_option:hover {
+  background: #f0f0f0;
+}
+
+.person_icon {
+  background: #ffebeb;
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-weight: 400;
+  color: #000;
+  border-radius: 50%;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.assign_btn {
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #e2e2e2;
+  color: #767575;
+  border-radius: 8px;
+  padding: 0.5rem 4rem;
+  cursor: pointer;
+}
+
+.add_item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #767575;
+  background: transparent;
+  font-size: 14px;
+}
+
+.checklist {
+  display: flex;
+  margin-top: 1rem;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.checklist_container {
+  display: flex;
+  gap: 0.7rem;
+  flex-direction: column;
+  max-height: 170px;
+  overflow-y: auto;
+  padding: 0 1rem;
+}
+
+.checklist_container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.checklist_container::-webkit-scrollbar-thumb {
+  background: #9cb7c5;
+  border-radius: 20px;
+}
+
+.checklist_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e2e2e2;
+  padding: 1rem 0.7rem;
+  border-radius: 8px;
+}
+
+.checklist_inputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.text_input {
+  border: none;
+  outline: none;
+}
+
+.modal_actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+.date_picker{
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #707070;
+    border: 1px solid #E2E2E2;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn_grp{
+    display: flex;
+    gap: 1rem;
+}
+
+.cancel_btn, .save_btn{
+    text-align: center;
+    padding: 0.7rem 3.5rem;
+    border-radius: 12px;
+}
+
+.cancel_btn{
+    color: #CF3636;
+    border: 1px solid #CF3636;
+    background: #ffffff;
+}
+
+.save_btn{
+    color: #ffffff;
+    background: #17A2B8;
+    border: none;
+}

@@ -1,9 +1,11 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import styles from "./Board.module.css";
-import people from "../../assets/people.png";
+import people_icon from "../../assets/people.png";
 import { AppContext } from "../../context/AppContext";
 import StateSection from "../StateSection/StateSection";
 import Loader from "../Loader/Loader";
+import EmailModal from "../Modals/EmailModal/EmailModal";
+import { useNavigate } from "react-router-dom";
 
 const dateSuffix = (day) => {
   if (day > 3 && day < 21) return "th";
@@ -30,7 +32,11 @@ const formatDate = (date) => {
 
 const Board = () => {
   const { tasks, filter, setFilter, loading } = useContext(AppContext);
-  const name  = localStorage.getItem('name');
+  const name = localStorage.getItem("name");
+  const navigate = useNavigate();
+
+  const [showAddPeopleModal, setShowAddPeopleModal] = useState(false);
+  const [showAddTaskModal, setShowAddTaskModal] = useState(false);
 
   const currentDate = useMemo(() => formatDate(new Date()), []);
 
@@ -38,8 +44,8 @@ const Board = () => {
     setFilter(event.target.value);
   };
 
-  if(loading){
-    return <Loader />
+  if(!localStorage.getItem('token')){
+    navigate('/');
   }
 
   return (
@@ -52,17 +58,39 @@ const Board = () => {
         <div className={styles.board_left}>
           <b className={styles.title_text}>Board</b>
           <div className={styles.add_people}>
-            <img src={people} alt="people" className={styles.people_img} />
-            <p className={styles.people_text}>Add People</p>
+            <img src={people_icon} alt="people" className={styles.people_img} />
+            <p
+              className={styles.people_text}
+              onClick={() => setShowAddPeopleModal(true)}
+            >
+              Add People
+            </p>
           </div>
         </div>
-        <select name={filter} className={styles.state_text} onChange={(event) => handleFilterChange(event)}>
+        <select
+          value={filter}
+          className={styles.state_text}
+          onChange={(event) => handleFilterChange(event)}
+        >
           <option value="Today">Today</option>
           <option value="This Week">This Week</option>
           <option value="This Month">This Month</option>
         </select>
       </div>
-      <StateSection tasks={tasks} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <StateSection
+          tasks={tasks}
+          showAddTaskModal={showAddTaskModal}
+          setShowAddTaskModal={setShowAddTaskModal}
+        />
+      )}
+      {showAddPeopleModal && (
+        <EmailModal
+          onClose={() => setShowAddPeopleModal(false)}
+        />
+      )}
     </div>
   );
 };

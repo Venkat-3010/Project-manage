@@ -252,7 +252,7 @@ const Register = () => {
         theme: "dark",
       });
 
-      navigate("/board");
+      navigate("/");
     }
   };
 

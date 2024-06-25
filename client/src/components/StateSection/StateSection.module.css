@@ -45,3 +45,12 @@
     height: 16px;
     cursor: pointer;
 }
+
+.tasks_container::-webkit-scrollbar{
+    height: 12px;
+}
+
+.tasks_container::-webkit-scrollbar-thumb{
+    background: #9CB7C5;
+    border-radius: 20px;
+}
