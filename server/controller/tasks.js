@@ -32,12 +32,17 @@ const updateTask = async (req, res) => {
   const { id } = req.params;
   try {
     const task = await Task.findById(id);
-    if (task.createdBy.toString() !== userId.toString()) {
-      return res.status(401).json({ message: "Not authorized" });
+    const user = await User.findById(req.userId); 
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
+    // console.log(req.body.assignedTo, task.createdBy, req.userId);
+    // if (req.body.assignedTo && task.createdBy.toString() !== req.userId.toString()) {
+    //   return res.status(401).json({ message: "Only the creator can reassign the task" });
+    // }
     const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
       new: true,
     });
@@ -57,7 +62,7 @@ const deleteTask = async (req, res) => {
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
-    await task.remove();
+    await task.deleteOne();
     res.status(200).json({ message: "Task deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -130,11 +135,13 @@ const getTaskById = async (req, res) => {
 const updateTaskState = async (req, res) => {
   const { id } = req.params;
   const { state } = req.body;
+  // console.log(id, state)
   try {
     const task = await Task.findById(id);
-    if (task.createdBy.toString() !== req.userId.toString()) {
-      return res.status(401).json({ message: "Not authorized" });
-    }
+    // console.log(task)
+    // if (task.createdBy.toString() !== req.userId.toString()) {
+    //   return res.status(401).json({ message: "Not authorized" });
+    // }
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
@@ -148,7 +155,19 @@ const updateTaskState = async (req, res) => {
 
 const getTaskAnalytics = async (req, res) => {
   try {
-    const tasks = await Task.find({ createdBy: req.userId });
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const tasks = await Task.find({
+      $or: [
+        { createdBy: req.userId },
+        { assignedTo: user.email }
+      ]
+    });
+    // console.log(tasks)
+
+    const today = new Date().toISOString().split("T")[0];
 
     const analytics = {
       status: {
@@ -163,10 +182,9 @@ const getTaskAnalytics = async (req, res) => {
         high: tasks.filter((task) => task.priority === "high").length,
       },
       dueDate: tasks.filter((task) => {
-        const today = new Date().toISOString().split("T")[0];
         const taskDate = new Date(task.dueDate).toISOString().split("T")[0];
-        return taskDate === today;
-      }),
+        return taskDate < today && task.state !== "done";
+      }).length,
     };
 
     res.status(200).json(analytics);

@@ -22,6 +22,20 @@
     overflow-y: auto;
 }
 
+.task_column::-webkit-scrollbar{
+    width: 10px;
+}
+
+.task_column::-webkit-scrollbar-thumb{
+    background: #9CB7C5;
+    border-radius: 20px;
+}
+
+.task_column::-webkit-scrollbar-track{
+    background: #D6EAF4;
+    margin: 2.5rem;
+}
+
 .block_top{
     display: flex;
     align-items: center;
@@ -38,12 +52,18 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+    opacity: 0.5;
 }
 
 .plus_icon{
     width: 16px;
     height: 16px;
     cursor: pointer;
+    opacity: 0.5;
+}
+
+.collapse_icon:hover, .plus_icon:hover{
+    opacity: 1;
 }
 
 .tasks_container::-webkit-scrollbar{

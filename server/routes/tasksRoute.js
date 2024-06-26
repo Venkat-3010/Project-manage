@@ -19,10 +19,10 @@ router.route("/analytics").get(auth, getTaskAnalytics);
 
 router
   .route("/:id")
-  .get(auth, getTaskById)
+  .get(getTaskById)
   .put(auth, updateTask)
   .delete(auth, deleteTask);
 
-router.route("/id/state").put(auth, updateTaskState);
+router.route("/:id/state").put(auth, updateTaskState);
 
 module.exports = router;

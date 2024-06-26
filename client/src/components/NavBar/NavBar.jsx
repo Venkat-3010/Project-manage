@@ -7,11 +7,14 @@ import logout from "../../assets/logout.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import LogoutModal from "../Modals/LogoutModal/LogoutModal";
 
 const NavBar = () => {
+  const [logoutModal, setLogoutModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const handleLogOut = () => {
+    setLogoutModal(false);
     localStorage.removeItem("token");
     toast.info("Logged out", {
       position: "bottom-right",
@@ -28,15 +31,30 @@ const NavBar = () => {
           <h1 className={styles.logo_text}>Pro Manage</h1>
         </div>
         <div className={styles.navBar_items}>
-          <Link to="/board" className={`${styles.item} ${location.pathname === '/board' ? styles.selected : ''}`}>
+          <Link
+            to="/board"
+            className={`${styles.item} ${
+              location.pathname === "/board" ? styles.selected : ""
+            }`}
+          >
             <img src={board} alt="" className={styles.img} />
             <h3 className={styles.text}>Board</h3>
           </Link>
-          <Link to="/analytics" className={`${styles.item} ${location.pathname === '/analytics' ? styles.selected : ''}`}>
+          <Link
+            to="/analytics"
+            className={`${styles.item} ${
+              location.pathname === "/analytics" ? styles.selected : ""
+            }`}
+          >
             <img src={analytics} alt="" className={styles.img} />
             <h3 className={styles.text}>Analytics</h3>
           </Link>
-          <Link to="/settings" className={`${styles.item} ${location.pathname === '/settings' ? styles.selected : ''}`}>
+          <Link
+            to="/settings"
+            className={`${styles.item} ${
+              location.pathname === "/settings" ? styles.selected : ""
+            }`}
+          >
             <img src={settings} alt="" className={styles.img} />
             <h3 className={styles.text}>Settings</h3>
           </Link>
@@ -44,8 +62,16 @@ const NavBar = () => {
       </div>
       <div className={styles.logout}>
         <img src={logout} alt="logout" className={styles.img} />
-        <h3 onClick={handleLogOut} className={styles.text}>Logout</h3>
+        <h3 onClick={() => setLogoutModal(true)} className={styles.text}>
+          Logout
+        </h3>
       </div>
+      {logoutModal && (
+        <LogoutModal
+          onClose={() => setLogoutModal(false)}
+          handleLogOut={handleLogOut}
+        />
+      )}
     </aside>
   );
 };

@@ -1,21 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
 import styles from "./CreateTaskModal.module.css";
 import delete_icon from "../../../assets/delete.png";
 import plus_icon from "../../../assets/plus.png";
 import downArrow_icon from "../../../assets/down-arrow.png";
-import { createTask } from "../../../api/taskApi";
+import { createTask, updateTask } from "../../../api/taskApi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CreateTaskModal = ({ onClose }) => {
-  const { people, setLoading } = useContext(AppContext);
+const CreateTaskModal = ({ onClose, task }) => {
+  const { people, setLoading, fetchTasks, user } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("low");
   const [assignedTo, setAssignedTo] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [checklist, setChecklist] = useState([]);
   const [dropdownView, setDropdownView] = useState(false);
+  const [errors, setErrors] = useState("");
+
+  const id = localStorage.getItem('id')
+  const isReadOnly = task && task.createdBy.toString() !== id;
+  // console.log(task.createdBy.toString());
 
   const handleAddChecklistItem = () => {
     setChecklist([...checklist, { text: "", completed: false }]);
@@ -37,7 +42,20 @@ const CreateTaskModal = ({ onClose }) => {
     setChecklist(newChecklist);
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = "Title is required";
+    if (!priority) newErrors.priority = "Priority is required";
+    if (checklist.length === 0 || checklist.every(item => !item.text)) {
+      newErrors.checklist = "At least one checklist item is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSave = async () => {
+    if (!validateForm()) return;
+
     const taskData = {
       title,
       priority,
@@ -46,7 +64,12 @@ const CreateTaskModal = ({ onClose }) => {
       dueDate,
     };
     setLoading(true);
-    await createTask(taskData);
+    if (task) {
+      await updateTask(task._id, taskData);
+    } else {
+      await createTask(taskData);
+    }
+    fetchTasks()
     setLoading(false);
     onClose();
   };
@@ -55,6 +78,16 @@ const CreateTaskModal = ({ onClose }) => {
     setDropdownView(false);
     setAssignedTo(person);
   };
+
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title);
+      setPriority(task.priority);
+      setAssignedTo(task.assignedTo);
+      setDueDate(new Date(task.dueDate));
+      setChecklist(task.checklist);
+    }
+  }, [task]);
 
   return (
     <div className={styles.modal_container}>
@@ -71,6 +104,7 @@ const CreateTaskModal = ({ onClose }) => {
               onChange={(event) => setTitle(event.target.value)}
               placeholder="Enter Task Title"
             />
+            {errors.title && <small className={styles.error}>{errors.title}</small>}
           </div>
           <div className={styles.priority}>
             <label className={styles.priority_title}>
@@ -114,12 +148,13 @@ const CreateTaskModal = ({ onClose }) => {
                 LOW PRIORITY
               </span>
             </div>
+            {errors.priority && <small className={styles.error}>{errors.priority}</small>}
           </div>
           {people.length > 0 && (
             <div className={styles.assign_to}>
               <label htmlFor="assign">Assign to</label>
               <div className={styles.select_container}>
-                <div className={styles.dropdown} onClick={handleDropdownToggle}>
+                <div className={styles.dropdown} onClick= {!isReadOnly ? handleDropdownToggle : undefined}>
                   <span>{assignedTo ? assignedTo : "Add an assignee"}</span>
                   <img
                     src={downArrow_icon}
@@ -133,14 +168,13 @@ const CreateTaskModal = ({ onClose }) => {
                       <div
                         key={person}
                         className={styles.person_option}
-                        onClick={() => handleAssign(person)}
                       >
                         <b className={styles.person_icon}>
                           {person.substring(0, 2).toUpperCase()}
                         </b>
                         {"  "}
                         {person}
-                        <button className={styles.assign_btn}>Assign</button>
+                        <button onClick={() => handleAssign(person)} className={styles.assign_btn}>Assign</button>
                       </div>
                     ))}
                   </div>
@@ -153,6 +187,7 @@ const CreateTaskModal = ({ onClose }) => {
               Checklist ({checklist.filter((item) => item.completed).length}/
               {checklist.length})<sup style={{ color: "red" }}>*</sup>
             </label>
+            {errors.checklist && <small className={styles.error}>{errors.checklist}</small>}
             <div className={styles.checklist_container}>
               {checklist.map((item, index) => {
                 return (
@@ -217,7 +252,7 @@ const CreateTaskModal = ({ onClose }) => {
               Cancel
             </button>
             <button className={styles.save_btn} onClick={handleSave}>
-              Save
+              {!task ? 'Save' : 'Update'}
             </button>
           </div>
         </div>

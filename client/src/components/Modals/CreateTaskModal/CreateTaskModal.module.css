@@ -137,15 +137,23 @@
   overflow-y: auto;
 }
 
+.dropdown_content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dropdown_content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #9cb7c5;
+}
+
 .person_option {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  cursor: pointer;
 }
 
-.person_option:hover {
+.assign_btn:hover {
   background: #f0f0f0;
 }
 
@@ -161,6 +169,7 @@
 }
 
 .assign_btn {
+  cursor: pointer;
   background-color: transparent;
   font-size: 14px;
   font-weight: 500;
@@ -235,37 +244,45 @@
   margin-top: 2.5rem;
 }
 
-.date_picker{
-    padding: 0.7rem 1rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 14px;
-    color: #707070;
-    border: 1px solid #E2E2E2;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
+.date_picker {
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #707070;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
 }
 
-.btn_grp{
-    display: flex;
-    gap: 1rem;
+.btn_grp {
+  display: flex;
+  gap: 1rem;
 }
 
-.cancel_btn, .save_btn{
-    text-align: center;
-    padding: 0.7rem 3.5rem;
-    border-radius: 12px;
+.cancel_btn,
+.save_btn {
+  text-align: center;
+  padding: 0.7rem 3.5rem;
+  border-radius: 12px;
 }
 
-.cancel_btn{
-    color: #CF3636;
-    border: 1px solid #CF3636;
-    background: #ffffff;
+.cancel_btn {
+  color: #cf3636;
+  border: 1px solid #cf3636;
+  background: #ffffff;
 }
 
-.save_btn{
-    color: #ffffff;
-    background: #17A2B8;
-    border: none;
+.save_btn {
+  color: #ffffff;
+  background: #17a2b8;
+  border: none;
+}
+
+.error{
+  text-align: center;
+  font-size: 12px;
+  color: #CF3636;
+  margin-bottom: 1rem;
 }

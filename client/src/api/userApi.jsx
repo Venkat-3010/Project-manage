@@ -120,4 +120,18 @@ const getPeople = async () => {
   }
 };
 
-export { registerUser, loginUser, updateUserProfile, addPersons, getPeople };
+const getUser = async () => {
+  try {
+    const response = await axios.get(`${url}/users`, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    toast.warn("Error getting people", error.message);
+  }
+};
+
+export { registerUser, loginUser, updateUserProfile, addPersons, getPeople, getUser };

@@ -29,10 +29,23 @@ const ConfirmAddPerson = ({ onClose, email }) => {
 const EmailModal = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [error, setError] = useState("");
   const { addPerson } = useContext(AppContext);
 
   const handleAddPerson = async () => {
     // console.log("Adding person with email:", email);
+    if (!email) {
+      setError("Email is required");
+      return;
+    }
+
+    
+    if (!email.includes('@')) {
+      setError("Please enter a valid email");
+      return;
+    }
+
+    setError("");
     await addPerson(email);
     setShowConfirmation(true);
   };
@@ -52,6 +65,7 @@ const EmailModal = ({ onClose }) => {
               placeholder="Enter Email"
               className={styles.input}
             />
+            {error && <p className={styles.error_text}>{error}</p>}
             <div className={styles.btn_grp}>
               <button
                 onClick={onClose}

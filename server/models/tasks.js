@@ -36,11 +36,9 @@ const taskSchema = new Schema(
       ref: "User",
       required: true,
     },
-    assignedTo: [
-      {
-        type: String,
-      },
-    ],
+    assignedTo: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

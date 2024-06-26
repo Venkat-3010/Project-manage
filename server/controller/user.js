@@ -22,10 +22,7 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     });
     await user.save();
-    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "1h",
-    });
-    res.status(201).json({ token });
+    res.status(201).json({ message: "registered Successfully" });
   } catch (error) {
     console.log("Error: ", error);
     res.status(500).json({ message: "Something went wrong" });
@@ -132,10 +129,24 @@ const getPeople = async (req, res) => {
   }
 }
 
+const getUser = async (req, res) => {
+  try{
+    const user = await User.findById(req.userId);
+    if(!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user: user });
+  }catch(error){
+    console.log("Error: ", error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   registerUser,
   loginUser,
   updateUserProfile,
   addPerson,
   getPeople,
+  getUser,
 };

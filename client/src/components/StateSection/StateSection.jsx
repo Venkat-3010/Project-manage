@@ -2,12 +2,28 @@ import styles from "./StateSection.module.css";
 import collapse from "../../assets/collapse.png";
 import plus from "../../assets/plus.png";
 import CreateTaskModal from "../Modals/CreateTaskModal/CreateTaskModal";
+import TaskCard from "../TaskCard/TaskCard";
+import { useState } from "react";
 
 const StateSection = ({
   tasks,
   showAddTaskModal,
   setShowAddTaskModal
 }) => {
+
+  const [checklistVisibility, setChecklistVisibility] = useState({});
+
+  const toggleChecklistVisibility = (taskId) => {
+    setChecklistVisibility((prev) => ({
+      ...prev,
+      [taskId]: !prev[taskId],
+    }));
+  };
+
+  const collapseAllChecklists = () => {
+    setChecklistVisibility({});
+  };
+
   return (
     <div className={styles.section_container}>
       <div className={styles.tasks_container}>
@@ -18,8 +34,19 @@ const StateSection = ({
               src={collapse}
               alt="collapse_icon"
               className={styles.collapse_icon}
+              onClick={collapseAllChecklists}
             />
           </span>
+          {
+            tasks.filter(task => task.state === 'backlog').map(task => (
+              <TaskCard
+                key={task._id}
+                task={task}
+                isChecklistVisible={checklistVisibility[task._id]}
+                toggleChecklistVisibility={toggleChecklistVisibility}
+              />
+            ))
+          }
         </div>
         <div className={styles.task_column}>
           <span className={styles.block_top}>
@@ -35,9 +62,20 @@ const StateSection = ({
                 src={collapse}
                 alt="collapse_icon"
                 className={styles.collapse_icon}
+                onClick={collapseAllChecklists}
               />
             </span>
           </span>
+            {
+            tasks.filter(task => task.state === 'todo').map(task => (
+              <TaskCard
+                key={task._id}
+                task={task}
+                isChecklistVisible={checklistVisibility[task._id]}
+                toggleChecklistVisibility={toggleChecklistVisibility}
+              />
+            ))
+          }
         </div>
         <div className={styles.task_column}>
           <span className={styles.block_top}>
@@ -46,8 +84,19 @@ const StateSection = ({
               src={collapse}
               alt="collapse_icon"
               className={styles.collapse_icon}
+              onClick={collapseAllChecklists}
             />
           </span>
+          {
+            tasks.filter(task => task.state === 'in-progress').map(task => (
+              <TaskCard
+                key={task._id}
+                task={task}
+                isChecklistVisible={checklistVisibility[task._id]}
+                toggleChecklistVisibility={toggleChecklistVisibility}
+              />
+            ))
+          }
         </div>
         <div className={styles.task_column}>
           <span className={styles.block_top}>
@@ -56,8 +105,19 @@ const StateSection = ({
               src={collapse}
               alt="collapse_icon"
               className={styles.collapse_icon}
+              onClick={collapseAllChecklists}
             />
           </span>
+          {
+            tasks.filter(task => task.state === 'done').map(task => (
+              <TaskCard
+                key={task._id}
+                task={task}
+                isChecklistVisible={checklistVisibility[task._id]}
+                toggleChecklistVisibility={toggleChecklistVisibility}
+              />
+            ))
+          }
         </div>
       </div>
       {showAddTaskModal && (

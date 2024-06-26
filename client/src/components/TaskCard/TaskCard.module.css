@@ -1,0 +1,225 @@
+.task_card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  border: none;
+  margin-top: 1rem;
+}
+
+.card_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.priority_text {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.task_priority {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.assign_icon {
+  padding: 5px;
+  font-size: 12px;
+  border: none;
+  border-radius: 50%;
+  background: #ffebeb;
+}
+
+.top_right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  position: relative;
+}
+
+.menu_icon {
+  width: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.hero_modal {
+  position: relative;
+  display: none;
+  z-index: 10000;
+}
+
+.menu_icon:hover + .hero_modal,
+.hero_modal:hover {
+  display: block;
+}
+
+.modal_container {
+  position: absolute;
+  left: -120px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0px 2px 22px 0px #7e7a7a40;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.btn {
+  align-content: start;
+  width: 150px;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.card_title {
+  font-size: 18px;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  cursor: pointer;
+  position: relative;
+}
+
+.tooltip,
+.tooltip_title {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 130%;
+  margin-left: -80px;
+  margin-bottom: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip_title .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after,
+.tooltip_title .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip_title:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checklist_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arrow_img {
+  width: 25px;
+  height: 25px;
+  background: #eeecec;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.checklist_item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #e2e2e2;
+  border-radius: 15px;
+  padding: 0.7rem 1.5rem;
+}
+
+.checklist_checkbox {
+  accent-color: #17a2b8;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  border: 2px solid #e2e2e2;
+}
+
+.card_bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn_grp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.due_date {
+  border: none;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.state_btn {
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}

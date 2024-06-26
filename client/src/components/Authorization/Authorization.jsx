@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, registerUser } from "../../api/userApi";
@@ -8,13 +8,14 @@ import lock from "../../assets/lock_icon.png";
 import profile from "../../assets/profile_icon.png";
 import eye from "../../assets/eye_icon.png";
 import bg from "../../assets/bg_image.png";
+import { AppContext } from "../../context/AppContext";
 
 const SideBg = () => {
   return (
     <div className={styles.bg_container}>
       <img src={bg} alt="bg" className={styles.side_img} />
       <div className={styles.bg_text}>
-        <p>Welcome aboard my friend </p>
+        <p className={styles.p_text}>Welcome aboard my friend </p>
         <span>just a couple of clicks and we start</span>
       </div>
     </div>
@@ -23,6 +24,7 @@ const SideBg = () => {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { fetchPeople, fetchTasks, fetchAnalytics } = useContext(AppContext)
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -78,6 +80,9 @@ const Login = () => {
         position: "bottom-right",
         theme: "dark",
       });
+      fetchAnalytics();
+      fetchPeople();
+      fetchTasks();
 
       navigate("/board");
     }
@@ -142,7 +147,7 @@ const Login = () => {
               Log in
             </button>
           </form>
-          <p>Have no Account yet?</p>
+          <p className={styles.p_text}>Have no Account yet?</p>
           <Link
             to="/register"
             className={`${styles.authBtn} ${styles.btn_outline}`}
@@ -356,7 +361,7 @@ const Register = () => {
               Register
             </button>
           </form>
-          <p>Have an Account?</p>
+          <p className={styles.p_text}>Have an Account?</p>
           <Link to="/" className={`${styles.authBtn} ${styles.btn_outline}`}>
             Log In
           </Link>

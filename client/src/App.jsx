@@ -7,6 +7,7 @@ import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AppProvider from "./context/AppProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import SharedInterface from "./components/SharedInterface/SharedInterface";
 
 function App() {
   return (
@@ -15,9 +16,20 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/board" element={<ProtectedRoute Component={BoardPage} />} />
-          <Route path="/analytics" element={<ProtectedRoute Component={AnalyticsPage} /> } />
-          <Route path="/settings" element={<ProtectedRoute Component={SettingsPage} />} />
+          <Route
+            path="/board"
+            element={<ProtectedRoute Component={BoardPage} />}
+          />
+          <Route
+            path="/analytics"
+            element={<ProtectedRoute Component={AnalyticsPage} />}
+          />
+          <Route
+            path="/settings"
+            element={<ProtectedRoute Component={SettingsPage} />}
+          />
+          <Route path="/:id" element={<SharedInterface />} />
+          {/* <Route path="*" element={<h1>404 Not Found</h1>} /> */}
         </Routes>
       </BrowserRouter>
     </AppProvider>

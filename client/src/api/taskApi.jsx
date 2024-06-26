@@ -40,9 +40,9 @@ const getTasks = async (filter) => {
   }
 };
 
-const updateTask = async (id, taskData) => {
+const updateTask = async (_id, taskData) => {
   try {
-    const response = await axios.put(`${url}/${id}`, taskData, {
+    const response = await axios.put(`${url}/${_id}`, taskData, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -54,9 +54,10 @@ const updateTask = async (id, taskData) => {
   }
 };
 
-const deleteTask = async (id) => {
+const deleteTask = async (_id) => {
+  // console.log(_id)
   try {
-    const response = await axios.delete(`${url}/${id}`, {
+    const response = await axios.delete(`${url}/${_id}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -68,9 +69,9 @@ const deleteTask = async (id) => {
   }
 };
 
-const getTaskById = async (id) => {
+const getTaskById = async (_id) => {
   try {
-    const response = await axios.get(`${url}/${id}`, {
+    const response = await axios.get(`${url}/${_id}`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -82,17 +83,14 @@ const getTaskById = async (id) => {
   }
 };
 
-const updateTaskState = async (id, state) => {
+const updateTaskState = async (_id, state) => {
+  // console.log(state);
   try {
-    const response = await axios.put(
-      `${url}/${id}/state`,
-      { state },
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
+    const response = await axios.put(`${url}/${_id}/state`, {state}, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
