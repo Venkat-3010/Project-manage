@@ -45,15 +45,18 @@ const EmailModal = ({ onClose }) => {
       return;
     }
 
-    setError("");
-    await addPerson(email);
-    setShowConfirmation(true);
+    const response = await addPerson(email);
+    if (response) {
+      setShowConfirmation(true);
+    }else{
+      setError("Email already exists");
+    }
   };
 
   return (
     <>
       {showConfirmation ? (
-        <ConfirmAddPerson onClose={onClose} email={email} />
+        <ConfirmAddPerson onClose={onClose} email={email}/>
       ) : (
         <div className={styles.modal_container}>
           <div className={styles.modal_content}>

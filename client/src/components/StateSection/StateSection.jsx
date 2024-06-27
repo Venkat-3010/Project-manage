@@ -5,12 +5,7 @@ import CreateTaskModal from "../Modals/CreateTaskModal/CreateTaskModal";
 import TaskCard from "../TaskCard/TaskCard";
 import { useState } from "react";
 
-const StateSection = ({
-  tasks,
-  showAddTaskModal,
-  setShowAddTaskModal
-}) => {
-
+const StateSection = ({ tasks, showAddTaskModal, setShowAddTaskModal }) => {
   const [checklistVisibility, setChecklistVisibility] = useState({});
 
   const toggleChecklistVisibility = (taskId) => {
@@ -37,16 +32,16 @@ const StateSection = ({
               onClick={collapseAllChecklists}
             />
           </span>
-          {
-            tasks.filter(task => task.state === 'backlog').map(task => (
+          {tasks
+            .filter((task) => task.state === "backlog")
+            .map((task) => (
               <TaskCard
                 key={task._id}
                 task={task}
                 isChecklistVisible={checklistVisibility[task._id]}
                 toggleChecklistVisibility={toggleChecklistVisibility}
               />
-            ))
-          }
+            ))}
         </div>
         <div className={styles.task_column}>
           <span className={styles.block_top}>
@@ -66,16 +61,16 @@ const StateSection = ({
               />
             </span>
           </span>
-            {
-            tasks.filter(task => task.state === 'todo').map(task => (
+          {tasks
+            .filter((task) => task.state === "todo")
+            .map((task) => (
               <TaskCard
                 key={task._id}
                 task={task}
                 isChecklistVisible={checklistVisibility[task._id]}
                 toggleChecklistVisibility={toggleChecklistVisibility}
               />
-            ))
-          }
+            ))}
         </div>
         <div className={styles.task_column}>
           <span className={styles.block_top}>
@@ -87,16 +82,16 @@ const StateSection = ({
               onClick={collapseAllChecklists}
             />
           </span>
-          {
-            tasks.filter(task => task.state === 'in-progress').map(task => (
+          {tasks
+            .filter((task) => task.state === "in-progress")
+            .map((task) => (
               <TaskCard
                 key={task._id}
                 task={task}
                 isChecklistVisible={checklistVisibility[task._id]}
                 toggleChecklistVisibility={toggleChecklistVisibility}
               />
-            ))
-          }
+            ))}
         </div>
         <div className={styles.task_column}>
           <span className={styles.block_top}>
@@ -108,22 +103,20 @@ const StateSection = ({
               onClick={collapseAllChecklists}
             />
           </span>
-          {
-            tasks.filter(task => task.state === 'done').map(task => (
+          {tasks
+            .filter((task) => task.state === "done")
+            .map((task) => (
               <TaskCard
                 key={task._id}
                 task={task}
                 isChecklistVisible={checklistVisibility[task._id]}
                 toggleChecklistVisibility={toggleChecklistVisibility}
               />
-            ))
-          }
+            ))}
         </div>
       </div>
       {showAddTaskModal && (
-        <CreateTaskModal
-          onClose={() => setShowAddTaskModal(false)}
-        />
+        <CreateTaskModal onClose={() => setShowAddTaskModal(false)} />
       )}
     </div>
   );

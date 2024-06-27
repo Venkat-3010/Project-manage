@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getTaskAnalytics, getTasks } from "../api/taskApi";
 import { addPersons, getPeople, getUser } from "../api/userApi";
 import { AppContext } from "./AppContext";
+import { toast } from "react-toastify";
 
 const AppProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
@@ -58,20 +59,24 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchTasks();
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchTasks();
+      fetchAnalytics();
+      fetchPeople();
+      fetchUser();
+    }
   }, [filter]);
-
-  useEffect(() => {
-    fetchAnalytics();
-  }, [tasks]);
-
-  useEffect(() => {
-    fetchPeople();
-    fetchUser();
-  }, []);
 
   const addPerson = async (email) => {
     // console.log("Adding person with email:", email);
+    if (people.includes(email)) {
+      toast.warn("This email is already added", {
+        position: "bottom-right",
+        theme: "dark",
+      });
+      return;
+    }
     const response = await addPersons(email);
     if (response) {
       setPeople((prevPeople) => [...prevPeople, email]);

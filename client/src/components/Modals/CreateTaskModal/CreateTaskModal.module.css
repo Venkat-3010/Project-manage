@@ -234,7 +234,13 @@
 .text_input {
   border: none;
   outline: none;
+  width: 200px;
 }
+
+.error_placeholder::placeholder {
+  color: red; 
+}
+
 
 .modal_actions {
   display: flex;

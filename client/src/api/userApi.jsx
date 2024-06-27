@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const url = "http://localhost:5000/api/user";
+const url = "https://pro-manage-ay06.onrender.com/api/user";
 
 const registerUser = async ({ name, email, password }) => {
   try {

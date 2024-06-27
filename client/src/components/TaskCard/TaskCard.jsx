@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./TaskCard.module.css";
 import dropdown from "../../assets/drop_down.png";
 import downArrow from "../../assets/down-arrow.png";
@@ -8,6 +8,7 @@ import DeleteModal from "../Modals/DeleteModal/DeleteModal";
 import CreateTaskModal from "../Modals/CreateTaskModal/CreateTaskModal";
 import { updateTaskState } from "../../api/taskApi";
 import { toast } from "react-toastify";
+import { Skeleton } from "react-content-placeholder";
 
 const dateSuffix = (day) => {
   if (day > 3 && day < 21) return "th";
@@ -30,18 +31,11 @@ const formatDate = (date) => {
   return `${month} ${day}${ordinalSuffix}`;
 };
 
-const HeroModal = ({
-  onEdit,
-  onShare,
-  task,
-  fetchTasks,
-}) => {
+const HeroModal = ({ onEdit, onShare, task, fetchTasks }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   return (
-    <div
-      className={styles.modal_container}
-    >
+    <div className={styles.modal_container}>
       <div className={styles.btn} onClick={onEdit}>
         Edit
       </div>
@@ -70,10 +64,9 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [taskState, setTaskState] = useState(task.state);
-  const [shareLink, setShareLink] = useState("");
   const states = ["backlog", "todo", "in-progress", "done"];
   const otherStates = states.filter((state) => state !== taskState);
-  const { fetchTasks } = useContext(AppContext);
+  const { fetchTasks, loading, setLoading } = useContext(AppContext);
 
   const handleMouseLeave = () => {
     setDropdownVisible(false);
@@ -87,9 +80,9 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
   const handleShare = () => {
     // console.log("url:", window.location.origin,"id", task._id)
     setDropdownVisible(false);
-    setShareLink(`${window.location.origin}/${task._id}`);
+    const link = `${window.location.origin}/${task._id}`;
     try {
-      navigator.clipboard.writeText(shareLink);
+      navigator.clipboard.writeText(link);
       toast.success("Link copied!", {
         position: "top-right",
         theme: "light",
@@ -104,9 +97,15 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
   };
 
   const handleChangeState = async (newState) => {
+    setLoading(true);
     await updateTaskState(task._id, newState);
     setTaskState(newState);
     fetchTasks();
+    toast.success("Task state updated", {
+      position: "bottom-right",
+      theme: "dark",
+    });
+    // setLoading(false)
   };
 
   const getPriorityColor = (priority) => {
@@ -139,105 +138,110 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
   };
 
   return (
-    <div className={styles.task_card}>
-      <div className={styles.card_top}>
-        <div className={styles.task_priority}>
-          <div
-            className={styles.circle}
-            style={{ backgroundColor: getPriorityColor(task.priority) }}
-          ></div>
-          <p className={styles.priority_text}>
-            {formatPriorityText(task.priority)}
-          </p>
-          <div className={styles.tooltip}>
-            <span className={styles.tooltiptext}>{task.assignedTo}</span>
-            <span className={styles.assign_icon}>
-              {task.assignedTo.substring(0, 2).toUpperCase()}
-            </span>
-          </div>
-        </div>
-        <div className={styles.top_right}>
-          <img
-            src={dropdown}
-            alt="menu icon"
-            className={styles.menu_icon}
-            onClick={() => setDropdownVisible(true)}
-          />
-          <div
-            className={styles.hero_modal}
-            onMouseLeave={handleMouseLeave}
-          >
-            {dropdownVisible && (
-              <HeroModal
-                task={task}
-                fetchTasks={fetchTasks}
-                onEdit={handleEdit}
-                onShare={handleShare}
-              />
+    <Skeleton loading={loading}>
+      <div className={styles.task_card}>
+        <div className={styles.card_top}>
+          <div className={styles.task_priority}>
+            <div
+              className={styles.circle}
+              style={{ backgroundColor: getPriorityColor(task.priority) }}
+            ></div>
+            <p className={styles.priority_text}>
+              {formatPriorityText(task.priority)}
+            </p>
+            {task.assignedTo && (
+              <div className={styles.tooltip}>
+                <span className={styles.tooltiptext}>{task.assignedTo}</span>
+                <span className={styles.assign_icon}>
+                  {task.assignedTo.substring(0, 2).toUpperCase()}
+                </span>
+              </div>
             )}
           </div>
-        </div>
-      </div>
-      <div className={styles.tooltip_title}>
-        <h3 className={styles.card_title}>{task.title}</h3>
-        <span className={styles.tooltiptext}>{task.title}</span>
-      </div>
-      <div className={styles.checklist}>
-        <span className={styles.checklist_title}>
-          <label htmlFor="">
-            Checklist ({task.checklist.filter((item) => item.completed).length}/
-            {task.checklist.length})
-          </label>
-          <img
-            src={isChecklistVisible ? upArrow : downArrow}
-            alt=""
-            onClick={() => toggleChecklistVisibility(task._id)}
-            className={styles.arrow_img}
-          />
-        </span>
-        {isChecklistVisible &&
-          task.checklist.map((item, index) => (
-            <div key={index} className={styles.checklist_item}>
-              <input
-                type="checkbox"
-                checked={item.completed}
-                className={styles.checklist_checkbox}
-                readOnly
-              />
-              <p>{item.text}</p>
+          <div className={styles.top_right}>
+            <img
+              src={dropdown}
+              alt="menu icon"
+              className={styles.menu_icon}
+              onClick={() => setDropdownVisible(true)}
+            />
+            <div className={styles.hero_modal} onMouseLeave={handleMouseLeave}>
+              {dropdownVisible && (
+                <HeroModal
+                  task={task}
+                  fetchTasks={fetchTasks}
+                  onEdit={handleEdit}
+                  onShare={handleShare}
+                />
+              )}
             </div>
-          ))}
-      </div>
-      <div className={styles.card_bottom}>
-        {task.dueDate && (
-          <div
-            className={styles.due_date}
-            style={{
-              color: isPastDueDate(task.dueDate) ? "#ffffff" : "#000",
-              backgroundColor: isPastDueDate(task.dueDate)
-                ? "#CF3636"
-                : "#DBDBDB",
-            }}
-          >
-            {formatDate(new Date(task.dueDate))}
           </div>
-        )}
-        <div className={styles.btn_grp}>
-          {otherStates.map((state) => (
-            <button
-              key={state}
-              onClick={() => handleChangeState(state)}
-              className={styles.state_btn}
-            >
-              {state.charAt(0).toUpperCase() + state.slice(1)}
-            </button>
-          ))}
         </div>
+        <div className={styles.tooltip_title}>
+          <h3 className={styles.card_title}>{task.title}</h3>
+          <span className={styles.tooltiptext}>{task.title}</span>
+        </div>
+        <div className={styles.checklist}>
+          <span className={styles.checklist_title}>
+            <label htmlFor="">
+              Checklist (
+              {task.checklist.filter((item) => item.completed).length}/
+              {task.checklist.length})
+            </label>
+            <img
+              src={isChecklistVisible ? upArrow : downArrow}
+              alt=""
+              onClick={() => toggleChecklistVisibility(task._id)}
+              className={styles.arrow_img}
+            />
+          </span>
+          {isChecklistVisible &&
+            task.checklist.map((item, index) => (
+              <div key={index} className={styles.checklist_item}>
+                <input
+                  type="checkbox"
+                  checked={item.completed}
+                  className={styles.checklist_checkbox}
+                  readOnly
+                />
+                <p>{item.text}</p>
+              </div>
+            ))}
+        </div>
+        <div className={styles.card_bottom}>
+          {task.dueDate && (
+            <div
+              className={styles.due_date}
+              style={{
+                color: isPastDueDate(task.dueDate) ? "#ffffff" : "#000",
+                backgroundColor: isPastDueDate(task.dueDate)
+                  ? "#CF3636"
+                  : "#DBDBDB",
+              }}
+            >
+              {formatDate(new Date(task.dueDate))}
+            </div>
+          )}
+          <div className={styles.btn_grp}>
+            {otherStates.map((state) => (
+              <button
+                key={state}
+                onClick={() => handleChangeState(state)}
+                className={styles.state_btn}
+              >
+                {state.charAt(0).toUpperCase() + state.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+        {showEditModal && (
+          <CreateTaskModal
+            onClose={() => setShowEditModal(false)}
+            task={task}
+          />
+        )}
       </div>
-      {showEditModal && (
-        <CreateTaskModal onClose={() => setShowEditModal(false)} task={task} />
-      )}
-    </div>
+    </Skeleton>
   );
 };
 

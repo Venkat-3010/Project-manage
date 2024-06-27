@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Analytics.module.css";
 import { AppContext } from "../../context/AppContext";
 import Loader from "../Loader/Loader";
+import { Skeleton } from "react-content-placeholder";
 
 const Analytics = () => {
   const navigate = useNavigate();
@@ -12,9 +13,9 @@ const Analytics = () => {
     navigate("/");
   }
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   const status = analytics?.status || {
     backlog: 0,
@@ -29,58 +30,62 @@ const Analytics = () => {
     <div className={styles.analytics_container}>
       <b className={styles.title_contaier}>Analytics</b>
       <div className={styles.analytics_box}>
-        <div className={styles.left_box}>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> Backlog:
+        <Skeleton loading={loading}>
+          <div className={styles.left_box}>
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> Backlog:
+              </div>
+              <b className={styles.number}>{status.backlog}</b>
             </div>
-            <b className={styles.number}>{status.backlog}</b>
-          </p>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> To-do Tasks:
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> To-do Tasks:
+              </div>
+              <b className={styles.number}>{status.todo}</b>
             </div>
-            <b className={styles.number}>{status.todo}</b>
-          </p>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> In-Progress Tasks:
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> In-Progress Tasks:
+              </div>
+              <b className={styles.number}>{status.inProgress}</b>
             </div>
-            <b className={styles.number}>{status.inProgress}</b>
-          </p>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> Completed Tasks:
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> Completed Tasks:
+              </div>
+              <b className={styles.number}>{status.done}</b>
             </div>
-            <b className={styles.number}>{status.done}</b>
-          </p>
-        </div>
-        <div className={styles.right_box}>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> Low:
+          </div>
+        </Skeleton>
+        <Skeleton loading={loading}>
+          <div className={styles.right_box}>
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> Low:
+              </div>
+              <b className={styles.number}>{priority.low}</b>
             </div>
-            <b className={styles.number}>{priority.low}</b>
-          </p>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> Moderate:
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> Moderate:
+              </div>
+              <b className={styles.number}>{priority.medium}</b>
             </div>
-            <b className={styles.number}>{priority.medium}</b>
-          </p>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> High:
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> High:
+              </div>
+              <b className={styles.number}>{priority.high}</b>
             </div>
-            <b className={styles.number}>{priority.high}</b>
-          </p>
-          <p className={styles.label}>
-            <div className={styles.text_space}>
-              <div className={styles.circle}></div> Due Date Tasks:
+            <div className={styles.label}>
+              <div className={styles.text_space}>
+                <div className={styles.circle}></div> Due Date Tasks:
+              </div>
+              <b className={styles.number}>{dueDate}</b>
             </div>
-            <b className={styles.number}>{dueDate}</b>
-          </p>
-        </div>
+          </div>
+        </Skeleton>
       </div>
     </div>
   );

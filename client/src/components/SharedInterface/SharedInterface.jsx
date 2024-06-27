@@ -7,6 +7,7 @@ import styles from "./SharedInterface.module.css";
 import React, { useContext, useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import { toast } from "react-toastify";
+import { Skeleton } from "react-content-placeholder";
 
 const dateSuffix = (day) => {
   if (day > 3 && day < 21) return "th";
@@ -82,56 +83,55 @@ const SharedInterface = () => {
     fetchTaskById();
   }, []);
 
-  if (loading) {
-    <Loader />;
-  }
-
   return (
     <div className={styles.shared_container}>
       <b className={styles.logo_text}>
-        <img src={logo} alt="logo" className={styles.logo} /> {" "}
-        Pro Manage
+        <img src={logo} alt="logo" className={styles.logo} /> Pro Manage
       </b>
-      <div className={styles.shared_content}>
-        <div className={styles.task_priority}>
-          <div
-            className={styles.circle}
-            style={{ backgroundColor: getPriorityColor(priority) }}
-          ></div>
-          <p className={styles.priority_text}>{formatPriorityText(priority)}</p>
-        </div>
-        <div className={styles.tooltip_title}>
-          <h3 className={styles.card_title}>{title}</h3>
-          <span className={styles.tooltiptext}>{title}</span>
-        </div>
-        <div className={styles.checklist}>
-          <span className={styles.checklist_title}>
-            <label htmlFor="">
-              Checklist ({checklist.filter((item) => item.completed).length}/
-              {checklist.length})
-            </label>
-          </span>
-          {checklist.map((item, index) => (
-            <div key={index} className={styles.checklist_item}>
-              <input
-                type="checkbox"
-                checked={item.completed}
-                className={styles.checklist_checkbox}
-                readOnly
-              />
-              <p>{item.text}</p>
-            </div>
-          ))}
-        </div>
-        {dueDate && (
-          <div className={styles.date_container}>
-            <p className={styles.date_text}>Due Date</p>
-            <div className={styles.due_date}>
-              {formatDate(new Date(dueDate))}
-            </div>
+      <Skeleton loading={loading}>
+        <div className={styles.shared_content}>
+          <div className={styles.task_priority}>
+            <div
+              className={styles.circle}
+              style={{ backgroundColor: getPriorityColor(priority) }}
+            ></div>
+            <p className={styles.priority_text}>
+              {formatPriorityText(priority)}
+            </p>
           </div>
-        )}
-      </div>
+          <div className={styles.tooltip_title}>
+            <h3 className={styles.card_title}>{title}</h3>
+            <span className={styles.tooltiptext}>{title}</span>
+          </div>
+          <div className={styles.checklist}>
+            <span className={styles.checklist_title}>
+              <label htmlFor="">
+                Checklist ({checklist.filter((item) => item.completed).length}/
+                {checklist.length})
+              </label>
+            </span>
+            {checklist.map((item, index) => (
+              <div key={index} className={styles.checklist_item}>
+                <input
+                  type="checkbox"
+                  checked={item.completed}
+                  className={styles.checklist_checkbox}
+                  readOnly
+                />
+                <p>{item.text}</p>
+              </div>
+            ))}
+          </div>
+          {dueDate && (
+            <div className={styles.date_container}>
+              <p className={styles.date_text}>Due Date</p>
+              <div className={styles.due_date}>
+                {formatDate(new Date(dueDate))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Skeleton>
     </div>
   );
 };

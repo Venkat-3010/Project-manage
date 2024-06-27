@@ -31,7 +31,7 @@ const formatDate = (date) => {
 };
 
 const Board = () => {
-  const { tasks, filter, setFilter, loading } = useContext(AppContext);
+  const { tasks, filter, setFilter } = useContext(AppContext);
   const name = localStorage.getItem("name");
   const navigate = useNavigate();
 
@@ -77,15 +77,13 @@ const Board = () => {
           <option value="This Month">This Month</option>
         </select>
       </div>
-      {loading ? (
-        <Loader />
-      ) : (
+      {
         <StateSection
           tasks={tasks}
           showAddTaskModal={showAddTaskModal}
           setShowAddTaskModal={setShowAddTaskModal}
         />
-      )}
+      }
       {showAddPeopleModal && (
         <EmailModal
           onClose={() => setShowAddPeopleModal(false)}

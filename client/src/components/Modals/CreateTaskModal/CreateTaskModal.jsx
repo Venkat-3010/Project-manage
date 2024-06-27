@@ -18,7 +18,7 @@ const CreateTaskModal = ({ onClose, task }) => {
   const [dropdownView, setDropdownView] = useState(false);
   const [errors, setErrors] = useState("");
 
-  const id = localStorage.getItem('id')
+  const id = localStorage.getItem("id");
   const isReadOnly = task && task.createdBy.toString() !== id;
   // console.log(task.createdBy.toString());
 
@@ -46,9 +46,16 @@ const CreateTaskModal = ({ onClose, task }) => {
     const newErrors = {};
     if (!title) newErrors.title = "Title is required";
     if (!priority) newErrors.priority = "Priority is required";
-    if (checklist.length === 0 || checklist.every(item => !item.text)) {
+    if (checklist.length === 0 || checklist.every((item) => !item.text)) {
       newErrors.checklist = "At least one checklist item is required";
+    } else {
+      checklist.forEach((item, index) => {
+        if (!item.text) {
+          newErrors[`checklist_${index}`] = "Checklist item cannot be empty";
+        }
+      });
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -69,7 +76,7 @@ const CreateTaskModal = ({ onClose, task }) => {
     } else {
       await createTask(taskData);
     }
-    fetchTasks()
+    fetchTasks();
     setLoading(false);
     onClose();
   };
@@ -104,7 +111,9 @@ const CreateTaskModal = ({ onClose, task }) => {
               onChange={(event) => setTitle(event.target.value)}
               placeholder="Enter Task Title"
             />
-            {errors.title && <small className={styles.error}>{errors.title}</small>}
+            {errors.title && (
+              <small className={styles.error}>{errors.title}</small>
+            )}
           </div>
           <div className={styles.priority}>
             <label className={styles.priority_title}>
@@ -148,13 +157,18 @@ const CreateTaskModal = ({ onClose, task }) => {
                 LOW PRIORITY
               </span>
             </div>
-            {errors.priority && <small className={styles.error}>{errors.priority}</small>}
+            {errors.priority && (
+              <small className={styles.error}>{errors.priority}</small>
+            )}
           </div>
           {people.length > 0 && (
             <div className={styles.assign_to}>
               <label htmlFor="assign">Assign to</label>
               <div className={styles.select_container}>
-                <div className={styles.dropdown} onClick= {!isReadOnly ? handleDropdownToggle : undefined}>
+                <div
+                  className={styles.dropdown}
+                  onClick={!isReadOnly ? handleDropdownToggle : undefined}
+                >
                   <span>{assignedTo ? assignedTo : "Add an assignee"}</span>
                   <img
                     src={downArrow_icon}
@@ -165,16 +179,18 @@ const CreateTaskModal = ({ onClose, task }) => {
                 {dropdownView && (
                   <div className={styles.dropdown_content}>
                     {people.map((person) => (
-                      <div
-                        key={person}
-                        className={styles.person_option}
-                      >
+                      <div key={person} className={styles.person_option}>
                         <b className={styles.person_icon}>
                           {person.substring(0, 2).toUpperCase()}
                         </b>
                         {"  "}
                         {person}
-                        <button onClick={() => handleAssign(person)} className={styles.assign_btn}>Assign</button>
+                        <button
+                          onClick={() => handleAssign(person)}
+                          className={styles.assign_btn}
+                        >
+                          Assign
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -187,7 +203,9 @@ const CreateTaskModal = ({ onClose, task }) => {
               Checklist ({checklist.filter((item) => item.completed).length}/
               {checklist.length})<sup style={{ color: "red" }}>*</sup>
             </label>
-            {errors.checklist && <small className={styles.error}>{errors.checklist}</small>}
+            {errors.checklist && (
+              <small className={styles.error}>{errors.checklist}</small>
+            )}
             <div className={styles.checklist_container}>
               {checklist.map((item, index) => {
                 return (
@@ -210,8 +228,14 @@ const CreateTaskModal = ({ onClose, task }) => {
                         onChange={(event) =>
                           handleChecklistItemChange(index, event.target.value)
                         }
-                        className={styles.text_input}
-                        placeholder="Add a task"
+                        className={`${styles.text_input} ${
+                          errors[`checklist_${index}`] ? styles.error_placeholder : ""
+                        }`}
+                        placeholder={
+                          errors[`checklist_${index}`]
+                            ? errors[`checklist_${index}`]
+                            : "Add a task"
+                        }
                       />
                     </span>
                     <img
@@ -252,7 +276,7 @@ const CreateTaskModal = ({ onClose, task }) => {
               Cancel
             </button>
             <button className={styles.save_btn} onClick={handleSave}>
-              {!task ? 'Save' : 'Update'}
+              {!task ? "Save" : "Update"}
             </button>
           </div>
         </div>

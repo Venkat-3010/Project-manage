@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const url = "http://localhost:5000/api/tasks";
+const url = "https://pro-manage-ay06.onrender.com/api/tasks";
 
 const createTask = async (taskData) => {
   try {
