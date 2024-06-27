@@ -59,10 +59,12 @@ const AppProvider = ({ children }) => {
   };
 
   const fetchData = async() => {
+    setLoading(true);
     await fetchTasks();
     await fetchAnalytics();
     await fetchPeople();
     await fetchUser();
+    setLoading(false);
   }
 
   useEffect(() => {

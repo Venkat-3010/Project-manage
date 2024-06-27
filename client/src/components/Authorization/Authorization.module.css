@@ -1,179 +1,195 @@
-.main_container{
-    display: flex;
-    width: 100vw;
-    height: 100vh;
+.main_container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
 }
 
 /* register login */
-.register_container, .login_container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    background-color: #ffffff;
-    width: 40%;
-    height: 100vh;
+.register_container,
+.login_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  background-color: #ffffff;
+  width: 40%;
+  height: 100vh;
 }
 
-.register_section, .login_section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    min-height: 35rem;
-    width: 100%;
-    padding: 0.8rem;
-    border-radius: 10px;
+.register_section,
+.login_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  min-height: 35rem;
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
 }
 
-.register_title, .login_title{
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 4rem;
+.register_title,
+.login_title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 4rem;
 }
 
-.register_form, .login_form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    width: 100%;
+.register_form,
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
 }
 
-.input_box, .input_shell{
-    padding: 0.1rem;
-    display: flex ;
-    border-radius: 5px;
-    border: 1px solid rgb(218, 208, 208);
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+.input_box,
+.input_shell {
+  padding: 0.1rem;
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid rgb(218, 208, 208);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.name_label{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: default;
+.name_label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
 }
 
-.input_shell, .input_box > input{
-    padding: 0.5rem;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    color: rgb(166, 157, 157);
-    width: 85%;
+.input_shell,
+.input_box > input {
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: rgb(166, 157, 157);
+  width: 85%;
 }
 
-.input_shell{
-    flex-direction: column;
-    gap: 0.7rem;
+.input_shell {
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-.input_box > input{
-    outline: none;
+.input_box > input {
+  outline: none;
 }
 
-.errorMessage{
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #D60000;
-    display: block;
+.errorMessage {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #d60000;
+  display: block;
 }
 
-.eye_icon{
-    width: 1.5rem;
-    color: rgb(166, 157, 157);
-    opacity: 0.5;
-    cursor: pointer;
+.eye_icon {
+  width: 1.5rem;
+  color: rgb(166, 157, 157);
+  opacity: 0.5;
+  cursor: pointer;
 }
 
-.eye_icon_selected{
-    opacity: 1;
+.eye_icon_selected {
+  opacity: 1;
 }
 
-.authBtn{
-    padding: 0.8rem 0;
-    border-radius: 100px;
-    cursor: pointer;
-    text-align: center;
-    background-color: rgb(23, 162, 184);
-    color: white;
-    border: transparent;
-    font-weight: 300;
-    letter-spacing: 1px;
-    margin-top: 3rem; 
-    min-width: 285px;
-    width: 85%;
+.authBtn {
+  padding: 0.8rem 0;
+  border-radius: 100px;
+  cursor: pointer;
+  text-align: center;
+  background-color: rgb(23, 162, 184);
+  color: white;
+  border: transparent;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-top: 3rem;
+  min-width: 285px;
+  width: 85%;
 }
 
-.authBtn:hover{
-    background-color: rgb(15, 95, 107);
-    color: white;
-    transition: all 0.3s ease 0s;
+.authBtn:hover {
+  background-color: rgb(15, 95, 107);
+  color: white;
+  transition: all 0.3s ease 0s;
 }
 
-.btn_outline{
-    background-color: white;
-    color: rgb(23, 162, 184);
-    border: 1px solid rgb(23, 162, 184);
-    text-align: center;
-    text-decoration: none;
-    margin-top: 0px;
-    border-radius: 100px;
-    cursor: pointer;
-    min-width: 285px;
-    width: 85%;
+.btn_outline {
+  background-color: white;
+  color: rgb(23, 162, 184);
+  border: 1px solid rgb(23, 162, 184);
+  text-align: center;
+  text-decoration: none;
+  margin-top: 0px;
+  border-radius: 100px;
+  cursor: pointer;
+  min-width: 285px;
+  width: 85%;
 }
 
-.p_text{
-    margin: 20px 0;
-    color: #828282;
+.p_text {
+  margin: 20px 0;
+  color: #828282;
 }
 
 /* sideBg */
-.bg_container{
+.bg_container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 60%;
   height: 100vh;
-  background-color: rgb(23, 162, 184);  
+  background-color: rgb(23, 162, 184);
 }
 
-.side_img{
-    /* position: relative; */
-    width: 450px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.side_img {
+  /* position: relative; */
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bg_text{
-    display: flex;
-    margin-top: -4rem;
-    flex-direction: column;
-    align-items: center;
-    color: rgb(255, 255, 255);
+.bg_text {
+  display: flex;
+  margin-top: -4rem;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(255, 255, 255);
 }
 
-.bg_text p{
-    color: rgb(255, 255, 255);
-    font-size: 1.8rem;
-    letter-spacing: 1.5px;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+.bg_text p {
+  color: rgb(255, 255, 255);
+  font-size: 1.8rem;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 @media screen and (width < 768px) {
-    .bg_container{
-        display: none;
-    }
+  .bg_container {
+    display: none;
+  }
+}
+
+/* disabling default password eye icon */
+
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
+}
+
+input[type="password"]::-ms-reveal {
+  display: none;
 }

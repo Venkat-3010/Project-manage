@@ -3,7 +3,6 @@ import styles from "./Board.module.css";
 import people_icon from "../../assets/people.png";
 import { AppContext } from "../../context/AppContext";
 import StateSection from "../StateSection/StateSection";
-import Loader from "../Loader/Loader";
 import EmailModal from "../Modals/EmailModal/EmailModal";
 import { useNavigate } from "react-router-dom";
 

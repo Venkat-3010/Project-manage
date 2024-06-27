@@ -80,8 +80,8 @@ const Login = () => {
         position: "bottom-right",
         theme: "dark",
       });
-      await fetchData();
       navigate("/board");
+      fetchData();
     }
   };
 
