@@ -66,7 +66,7 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
   const [taskState, setTaskState] = useState(task.state);
   const states = ["backlog", "todo", "in-progress", "done"];
   const otherStates = states.filter((state) => state !== taskState);
-  const { fetchTasks, loading, setLoading } = useContext(AppContext);
+  const { fetchTasks, loading, setLoading, fetchAnalytics } = useContext(AppContext);
 
   const handleMouseLeave = () => {
     setDropdownVisible(false);
@@ -101,6 +101,7 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
     await updateTaskState(task._id, newState);
     setTaskState(newState);
     fetchTasks();
+    fetchAnalytics()
     toast.success("Task state updated", {
       position: "bottom-right",
       theme: "dark",
