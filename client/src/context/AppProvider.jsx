@@ -58,13 +58,17 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const fetchData = async() => {
+    await fetchTasks();
+    await fetchAnalytics();
+    await fetchPeople();
+    await fetchUser();
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetchTasks();
-      fetchAnalytics();
-      fetchPeople();
-      fetchUser();
+      fetchData();
     }
   }, [filter]);
 
@@ -98,6 +102,7 @@ const AppProvider = ({ children }) => {
         fetchAnalytics,
         fetchTasks,
         fetchPeople,
+        fetchData,
         user,
       }}
     >

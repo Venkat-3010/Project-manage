@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, registerUser } from "../../api/userApi";
@@ -8,6 +8,7 @@ import lock from "../../assets/lock_icon.png";
 import profile from "../../assets/profile_icon.png";
 import eye from "../../assets/eye_icon.png";
 import bg from "../../assets/bg_image.png";
+import { AppContext } from "../../context/AppContext";
 
 const SideBg = () => {
   return (
@@ -27,6 +28,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const {fetchData} = useContext(AppContext)
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [error, setError] = useState({});
@@ -78,7 +80,7 @@ const Login = () => {
         position: "bottom-right",
         theme: "dark",
       });
-
+      await fetchData();
       navigate("/board");
     }
   };
