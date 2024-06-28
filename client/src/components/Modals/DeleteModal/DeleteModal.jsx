@@ -4,7 +4,7 @@ import { AppContext } from "../../../context/AppContext";
 import styles from "./DeleteModal.module.css";
 import Loader from "../../Loader/Loader";
 
-const DeleteModal = ({task, fetchTasks, onClose}) => {
+const DeleteModal = ({task, fetchTasks, fetchAnalytics, onClose}) => {
     const { loading, setLoading } = useContext(AppContext);
     const id = localStorage.getItem("id");
     const isReadOnly = task && task.createdBy.toString() !== id;
@@ -13,6 +13,7 @@ const DeleteModal = ({task, fetchTasks, onClose}) => {
         setLoading(true);
         await deleteTask(task._id);
         await fetchTasks();
+        await fetchAnalytics();
         setLoading(false);
       };
 

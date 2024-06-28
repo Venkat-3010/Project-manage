@@ -80,7 +80,7 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
   const handleShare = () => {
     // console.log("url:", window.location.origin,"id", task._id)
     setDropdownVisible(false);
-    const link = `${window.location.origin}/${task._id}`;
+    const link = `${window.location.origin}/shared/${task._id}`;
     try {
       navigator.clipboard.writeText(link);
       toast.success("Link copied!", {

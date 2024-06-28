@@ -5,6 +5,7 @@
   padding-top: 1.5rem;
   padding-left: 1.5rem;
   overflow: auto;
+  font-family: "Poppins", sans-serif;
 }
 
 .welcome_date {
@@ -71,6 +72,6 @@
   padding: 1.5rem;
 }
 
-.state_text > option{
-    padding: 1rem;
+.state_text > option {
+  padding: 1rem;
 }

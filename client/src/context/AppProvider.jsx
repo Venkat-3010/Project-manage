@@ -58,14 +58,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     setLoading(true);
     await fetchTasks();
     await fetchAnalytics();
     await fetchPeople();
     await fetchUser();
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -75,19 +75,29 @@ const AppProvider = ({ children }) => {
   }, [filter]);
 
   const addPerson = async (email) => {
-    // console.log("Adding person with email:", email);
+    // console.log("Adding person with email:", email, people);
     if (people.includes(email)) {
       toast.warn("This email is already added", {
         position: "bottom-right",
         theme: "dark",
       });
-      return;
+      return false;
+    } else {
+      try {
+        const response = await addPersons(email);
+        if (response) {
+          setPeople((prevPeople) => [...prevPeople, email]);
+          // console.log("response:", response, "people: ", people);
+          return true;
+        } else {
+          console.log("Failed to add person");
+          return false;
+        }
+      } catch (error) {
+        console.error("Error adding person:", error);
+        return false;
+      }
     }
-    const response = await addPersons(email);
-    if (response) {
-      setPeople((prevPeople) => [...prevPeople, email]);
-    }
-    // console.log("response:", response, "people: ", people);
   };
 
   return (

@@ -3,9 +3,7 @@ import { getTaskById } from "../../api/taskApi";
 import { AppContext } from "../../context/AppContext";
 import logo from "../../assets/logo.png";
 import styles from "./SharedInterface.module.css";
-
-import React, { useContext, useEffect, useState } from "react";
-import Loader from "../Loader/Loader";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Skeleton } from "react-content-placeholder";
 
@@ -42,7 +40,7 @@ const SharedInterface = () => {
     try {
       setLoading(true);
       const task = await getTaskById(id);
-      console.log(task);
+      // console.log(task);
       setTitle(task.title);
       setPriority(task.priority);
       setDueDate(new Date(task.dueDate));
@@ -50,7 +48,10 @@ const SharedInterface = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.warn("Error fetching task", error.message);
+      toast.warn("Error fetching task", {
+        theme: 'dark',
+        position: 'bottom-right'
+      });
       setLoading(false);
     }
   };

@@ -1,28 +1,31 @@
 import { useContext, useState } from "react";
 import styles from "./EmailModal.module.css";
 import { AppContext } from "../../../context/AppContext";
+import { Skeleton } from "react-content-placeholder";
 
-const ConfirmAddPerson = ({ onClose, email }) => {
+const ConfirmAddPerson = ({ onClose, email, loading }) => {
   return (
-    <div className={styles.modal_container}>
-      <div className={styles.confimrModal_content}>
-        <p
-          className={styles.email}
-          style={{
-            color: "#000000",
-          }}
-        >
-          {email}
-        </p>
-        <button
-          className={styles.btn}
-          onClick={onClose}
-          style={{ backgroundColor: "#17A2B8", color: "#ffffff" }}
-        >
-          Okay, got it
-        </button>
+    <Skeleton loading={loading}>
+      <div className={styles.modal_container}>
+        <div className={styles.confimrModal_content}>
+          <p
+            className={styles.email}
+            style={{
+              color: "#000000",
+            }}
+          >
+            {email}
+          </p>
+          <button
+            className={styles.btn}
+            onClick={onClose}
+            style={{ backgroundColor: "#17A2B8", color: "#ffffff" }}
+          >
+            Okay, got it
+          </button>
+        </div>
       </div>
-    </div>
+    </Skeleton>
   );
 };
 
@@ -30,7 +33,7 @@ const EmailModal = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState("");
-  const { addPerson } = useContext(AppContext);
+  const { addPerson, loading } = useContext(AppContext);
 
   const handleAddPerson = async () => {
     // console.log("Adding person with email:", email);
@@ -39,16 +42,16 @@ const EmailModal = ({ onClose }) => {
       return;
     }
 
-    
-    if (!email.includes('@')) {
+    if (!email.includes("@")) {
       setError("Please enter a valid email");
       return;
     }
 
     const response = await addPerson(email);
+    console.log(response);
     if (response) {
       setShowConfirmation(true);
-    }else{
+    } else {
       setError("Email already exists");
     }
   };
@@ -56,7 +59,7 @@ const EmailModal = ({ onClose }) => {
   return (
     <>
       {showConfirmation ? (
-        <ConfirmAddPerson onClose={onClose} email={email}/>
+        <ConfirmAddPerson onClose={onClose} email={email} loading={loading}/>
       ) : (
         <div className={styles.modal_container}>
           <div className={styles.modal_content}>

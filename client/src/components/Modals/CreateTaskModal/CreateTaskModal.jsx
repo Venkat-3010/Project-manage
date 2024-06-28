@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CreateTaskModal = ({ onClose, task }) => {
-  const { people, setLoading, fetchTasks, user } = useContext(AppContext);
+  const { people, setLoading, fetchTasks, fetchAnalytics } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("low");
   const [assignedTo, setAssignedTo] = useState("");
@@ -77,6 +77,7 @@ const CreateTaskModal = ({ onClose, task }) => {
       await createTask(taskData);
     }
     fetchTasks();
+    fetchAnalytics();
     setLoading(false);
     onClose();
   };

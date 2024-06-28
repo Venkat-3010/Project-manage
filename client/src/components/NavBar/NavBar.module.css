@@ -6,7 +6,7 @@
     justify-content: space-between;
     /* padding: 1.5rem; */
     border-right: 1px solid #EDF5FE;
-    min-width: 170px;
+    min-width: 190px;
 }
 
 .logo, .logout, .item{

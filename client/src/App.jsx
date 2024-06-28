@@ -8,6 +8,8 @@ import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AppProvider from "./context/AppProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SharedInterface from "./components/SharedInterface/SharedInterface";
+import InterfacePage from "./pages/InterfacePage/InterfacePage";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 function App() {
   return (
@@ -28,8 +30,8 @@ function App() {
             path="/settings"
             element={<ProtectedRoute Component={SettingsPage} />}
           />
-          <Route path="/:id" element={<SharedInterface />} />
-          {/* <Route path="*" element={<h1>404 Not Found</h1>} /> */}
+          <Route path="/shared/:id" element={<InterfacePage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>
