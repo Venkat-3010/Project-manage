@@ -1,6 +1,4 @@
-# Pro Manage is a website built with MERN Stack
-
-- This web app helps users keep track of their .
+## Live App : <a href="https://pro-manage-sable.vercel.app" target="_blank">Link</a>
 
 ## Features
 
