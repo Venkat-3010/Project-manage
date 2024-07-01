@@ -37,7 +37,7 @@
 <div style="display: flex; justify-content: space-between; gap:10px">
     <img src="https://github.com/Venkat-3010/pro-manage/blob/main/assets/createTask_1.png" alt="Image 1" height="250" width="250">
     <img src="https://github.com/Venkat-3010/pro-manage/blob/main/assets/createTask_2.png" alt="Image 2" height="250"  width="250">
-    <img src="https://github.com/Venkat-3010/pro-manage/blob/main/assets/createTask_3.png" alt="Image 3" height="250" width="250">
+    <img src="https://github.com/Venkat-3010/pro-manage/blob/main/assets/createTask3.png" alt="Image 3" height="250" width="250">
 
 </div>
 
