@@ -31,7 +31,7 @@ const formatDate = (date) => {
   return `${month} ${day}${ordinalSuffix}`;
 };
 
-const HeroModal = ({ onEdit, onShare, task, fetchTasks }) => {
+const HeroModal = ({ onEdit, onShare, task }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   return (
@@ -52,7 +52,6 @@ const HeroModal = ({ onEdit, onShare, task, fetchTasks }) => {
       {deleteModal && (
         <DeleteModal
           task={task}
-          fetchTasks={fetchTasks}
           onClose={() => setDeleteModal(false)}
         />
       )}
@@ -170,7 +169,6 @@ const TaskCard = ({ task, isChecklistVisible, toggleChecklistVisibility }) => {
               {dropdownVisible && (
                 <HeroModal
                   task={task}
-                  fetchTasks={fetchTasks}
                   onEdit={handleEdit}
                   onShare={handleShare}
                 />

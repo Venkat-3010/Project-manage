@@ -212,15 +212,15 @@
 
 .due_date {
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 10px;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1rem;
 }
 
 .state_btn {
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 0.5rem 1rem;
   font-size: 10px;
   font-weight: 500;

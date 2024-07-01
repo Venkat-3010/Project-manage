@@ -76,30 +76,30 @@ const getTasks = async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   if (filter === "Today") {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
     filters.createdAt = {
       $gte: today,
       $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
     };
   } else if (filter === "This Week") {
-    const today = new Date();
-    const startOfWeek = today.getDate() - today.getDay();
-    const endOfWeek = startOfWeek + 6;
+    const startOfWeek = new Date(today);
+    const endOfWeek = new Date(today);
 
-    const startDate = new Date(today.setDate(startOfWeek));
-    const endDate = new Date(today.setDate(endOfWeek));
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    endOfWeek.setDate(today.getDate() - today.getDay() + 6);
 
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(23, 59, 59, 999);
+    startOfWeek.setHours(0, 0, 0, 0);
+    endOfWeek.setHours(23, 59, 59, 999);
 
     filters.createdAt = {
-      $gte: startDate,
-      $lt: endDate,
+      $gte: startOfWeek,
+      $lt: endOfWeek,
     };
   } else if (filter === "This Month") {
-    const today = new Date();
     const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
     const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
